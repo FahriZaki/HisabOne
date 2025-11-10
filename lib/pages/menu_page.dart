@@ -12,6 +12,7 @@ import 'rmfunding_page.dart';
 import 'rmconsumer_page.dart';
 import 'rmpriority_page.dart';
 import 'pipeline_page.dart';
+import 'pipeline_mtd_page.dart';
 import 'send_notification_page.dart';
 import 'dashboard_page_v2.dart';
 import 'dashboard_region_page.dart';
@@ -122,10 +123,21 @@ class _MenuPageState extends State<MenuPage> {
       },
       {
         "key": "pipeline",
-        "title": "Pipeline",
+        "title": "Pipeline Today",
         "icon": Icons.insert_chart_outlined,
         "color": Colors.cyan[100],
         "page": PipelinePage(
+          level: widget.level,
+          region: widget.region,
+          cabang: widget.cabang,
+        ),
+      },
+            {
+        "key": "pipelinemtd",
+        "title": "Pipeline MTD",
+        "icon": Icons.candlestick_chart_rounded,
+        "color": Colors.cyan[100],
+        "page": PipelinemtdPage(
           level: widget.level,
           region: widget.region,
           cabang: widget.cabang,
@@ -223,6 +235,7 @@ class _MenuPageState extends State<MenuPage> {
         "dashboard",
         "dashboardregion",
         "pipeline",
+        "pipelinemtd",
         "topbottombranch",
         "bmlogin",
         "rmfunding",
@@ -237,6 +250,7 @@ class _MenuPageState extends State<MenuPage> {
         "dashboard",
         "dashboardregion",
         "pipeline",
+        "pipelinemtd",
         "topbottombranch",
         "bmlogin",
         "rmfunding",
@@ -265,6 +279,7 @@ class _MenuPageState extends State<MenuPage> {
                 "dashboardregion",
                 "topbottombranch",
                 "pipeline",
+                "pipelinemtd",
                 "pipelinetoday",
               ].contains(m["key"]),
             )
