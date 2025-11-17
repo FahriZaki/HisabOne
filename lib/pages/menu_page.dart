@@ -12,7 +12,7 @@ import 'rmfunding_page.dart';
 import 'rmconsumer_page.dart';
 import 'rmpriority_page.dart';
 import 'pipeline_page.dart';
-import 'pipeline_mtd_page.dart';
+//import 'pipeline_mtd_page.dart';
 import 'send_notification_page.dart';
 import 'dashboard_page_v2.dart';
 import 'dashboard_region_page.dart';
@@ -22,6 +22,8 @@ import 'snapshot_produk_page.dart';
 import 'profil_page.dart';
 import 'topbottom_branch_page.dart';
 import 'cs_page.dart';
+import 'dashboard_qris_page.dart';
+import 'dashboard_bookcon_page.dart';
 
 class MenuPage extends StatefulWidget {
   final int level;
@@ -132,17 +134,17 @@ class _MenuPageState extends State<MenuPage> {
           cabang: widget.cabang,
         ),
       },
-            {
-        "key": "pipelinemtd",
-        "title": "Pipeline MTD",
-        "icon": Icons.candlestick_chart_rounded,
-        "color": Colors.cyan[100],
-        "page": PipelinemtdPage(
-          level: widget.level,
-          region: widget.region,
-          cabang: widget.cabang,
-        ),
-      },
+      // {
+      //   "key": "pipelinemtd",
+      //   "title": "Pipeline MTD",
+      //   "icon": Icons.candlestick_chart_rounded,
+      //   "color": Colors.cyan[100],
+      //   "page": PipelinemtdPage(
+      //     level: widget.level,
+      //     region: widget.region,
+      //     cabang: widget.cabang,
+      //   ),
+      // },
       {
         "key": "pipelinetoday",
         "title": "Plan Hari Ini",
@@ -156,6 +158,32 @@ class _MenuPageState extends State<MenuPage> {
         "icon": Icons.timeline,
         "color": Colors.amber[100],
         "page": const TopBottomBranchPage(),
+      },
+      {
+        "key": "dashboardqris",
+        "title": "Dashboard Qris",
+        "icon": Image.asset(
+          'assets/images/menu_qris.jpg',
+          width: 60,
+          height: 60,
+        ),
+        "color": Colors.amber[100],
+        "page": DashboardQrisPage(
+          level: widget.level,
+          region: widget.region,
+          cabang: widget.cabang,
+        ),
+      },
+      {
+        "key": "dashboardbookcon",
+        "title": "Dashboard Booking Consumer",
+        "icon": Icons.data_thresholding_rounded,
+        "color": Colors.amber[100],
+        "page": DashboardBookconPage(
+          level: widget.level,
+          region: widget.region,
+          cabang: widget.cabang,
+        ),
       },
       {
         "key": "bmlogin",
@@ -237,6 +265,8 @@ class _MenuPageState extends State<MenuPage> {
         "pipeline",
         "pipelinemtd",
         "topbottombranch",
+        "dashboardqris",
+        "dashboardbookcon",
         "bmlogin",
         "rmfunding",
         "rmconsumer",
@@ -252,6 +282,8 @@ class _MenuPageState extends State<MenuPage> {
         "pipeline",
         "pipelinemtd",
         "topbottombranch",
+        "dashboardqris",
+        "dashboardbookcon",
         "bmlogin",
         "rmfunding",
         "rmconsumer",
@@ -259,6 +291,7 @@ class _MenuPageState extends State<MenuPage> {
         "csactivity",
         "detailactivity",
       ],
+      5: ["snapshot", "snapshotproduk", "topbottombranch", "dashboNardqris"],
     };
 
     final userMenus =
@@ -281,6 +314,8 @@ class _MenuPageState extends State<MenuPage> {
                 "pipeline",
                 "pipelinemtd",
                 "pipelinetoday",
+                "dashboardqris",
+                "dashboardbookcon",
               ].contains(m["key"]),
             )
             .toList();
@@ -380,7 +415,7 @@ class _MenuPageState extends State<MenuPage> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          // 🔹 Icon Logout di atas
+                          // Icon Logout di atas
                           Container(
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
@@ -395,7 +430,7 @@ class _MenuPageState extends State<MenuPage> {
                           ),
                           const SizedBox(height: 20),
 
-                          // 🔹 Judul
+                          // Judul
                           const Text(
                             "Konfirmasi Logout",
                             style: TextStyle(
@@ -416,7 +451,7 @@ class _MenuPageState extends State<MenuPage> {
                           ),
                           const SizedBox(height: 24),
 
-                          // 🔹 Tombol aksi
+                          // Tombol aksi
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -492,7 +527,7 @@ class _MenuPageState extends State<MenuPage> {
               );
 
               try {
-                // 🔥 Panggil API logout.php
+                // Panggil API logout.php
                 final response = await http.post(
                   Uri.parse("http://103.59.95.71/api_performance/logout.php"),
                   body: {'SESSION_TOKEN': sessionToken},
@@ -552,7 +587,9 @@ class _MenuPageState extends State<MenuPage> {
         children: [
           _buildMenuSection("Performance", performanceMenus),
           const SizedBox(height: 16),
-          _buildMenuSection("Activity M-Direct", activityMenus),
+
+          if (widget.level != 5)
+            _buildMenuSection("Activity M-Direct", activityMenus),
         ],
       ),
     );
@@ -635,7 +672,14 @@ class _MenuPageState extends State<MenuPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(menu["icon"], size: 36, color: Colors.black54),
+                        menu["icon"] is IconData
+                            ? Icon(
+                              menu["icon"],
+                              size: 36,
+                              color: Colors.black54,
+                            )
+                            : (menu["icon"] as Widget),
+
                         const SizedBox(height: 8),
                         Text(
                           menu["title"],

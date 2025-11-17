@@ -866,8 +866,8 @@ Future<void> fetchQualitySmeData() async {
             // REGION
             GridColumn(
               columnName: 'region',
-              width: 115,
-              allowSorting: false,
+              width: 115, 
+              allowSorting: false, 
               label: Container(
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.all(8),
@@ -905,7 +905,7 @@ Future<void> fetchQualitySmeData() async {
             ),
             GridColumn(
               columnName: 'oct13',
-              width: 75,
+              width: 78,
               label: _headerCell(
                 headerToday.isNotEmpty ? headerToday : 'Today',
                 color: Colors.green[700]!,
