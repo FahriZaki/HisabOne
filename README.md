@@ -1,3 +1,3 @@
-# flutter_auth_login_api
+# Dashboard Performance Mobile App
 
-A new Flutter project.
+Dashboard Performance Mobile App
